@@ -5,6 +5,10 @@
 /.pnp
 .pnp.js
 
+# config files
+.prettierrc
+.vscode
+
 # testing
 /coverage
 
