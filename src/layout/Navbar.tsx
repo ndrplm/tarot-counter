@@ -1,19 +1,38 @@
-import { Link } from 'react-router-dom'
+import Link from '../design_system/Link'
+import styled from 'styled-components'
+
+const NavbarContainer = styled.nav`
+  height: 40px;
+  background-color: gray;
+`
+const List = styled.ul`
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  height: inherit;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+`
+
+const ListItem = styled.li`
+  display: inline;
+`
 
 const Navbar = () => (
-  <nav>
-    <ul>
-      <li>
+  <NavbarContainer>
+    <List>
+      <ListItem>
         <Link to="/">Joueurs</Link>
-      </li>
-      <li>
+      </ListItem>
+      <ListItem>
         <Link to="hands">Donnes</Link>
-      </li>
-      <li>
+      </ListItem>
+      <ListItem>
         <Link to="score">Score</Link>
-      </li>
-    </ul>
-  </nav>
+      </ListItem>
+    </List>
+  </NavbarContainer>
 )
 
 export default Navbar
