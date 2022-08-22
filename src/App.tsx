@@ -8,7 +8,6 @@ import NotFound from './pages/NotFound'
 const App = () => (
   <BrowserRouter>
     <Layout>
-      App works !
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="hands">
