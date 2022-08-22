@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Layout from './layout/Layout'
+import { Routes, Route, BrowserRouter } from 'react-router-dom'
+import Index from './pages/Index'
+import HandsIndex from './pages/hands/Index'
+import HandIdIndex from './pages/hands/_hand_id/Index'
+import NotFound from './pages/NotFound'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => (
+  <BrowserRouter>
+    <Layout>
+      App works !
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="hands">
+          <Route path=":id" element={<HandIdIndex />} />
+          <Route index element={<HandsIndex />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Layout>
+  </BrowserRouter>
+)
 
-export default App;
+export default App
