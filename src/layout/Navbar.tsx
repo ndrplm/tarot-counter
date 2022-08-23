@@ -19,18 +19,29 @@ const ListItem = styled.li`
   display: inline;
 `
 
+const NAVIGATION_ITEMS = [
+  {
+    path: '/',
+    label: 'Joueurs',
+  },
+  {
+    path: 'hands',
+    label: 'Donnes',
+  },
+  {
+    path: 'score',
+    label: 'Score',
+  },
+]
+
 const Navbar = () => (
   <NavbarContainer>
     <List>
-      <ListItem>
-        <Link to="/">Joueurs</Link>
-      </ListItem>
-      <ListItem>
-        <Link to="hands">Donnes</Link>
-      </ListItem>
-      <ListItem>
-        <Link to="score">Score</Link>
-      </ListItem>
+      {NAVIGATION_ITEMS.map(({ path, label }) => (
+        <ListItem key={path}>
+          <Link to={path}>{label}</Link>
+        </ListItem>
+      ))}
     </List>
   </NavbarContainer>
 )
