@@ -9,9 +9,9 @@ export interface Game {
 }
 
 export interface Hand {
-  id: number
-  taker: Taker
-  defense: Defense
+  id: string
+  taker?: Taker
+  defense?: Defense
 }
 
 export interface Defense {
