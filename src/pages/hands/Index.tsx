@@ -7,15 +7,15 @@ const Index = () => {
 
   const createNewHand = () => {
     const id = Date.now()
-    hands.push({ id })
+    hands.push({ id: `${id}` })
     sessionStorage.setItem('hands', JSON.stringify(hands))
-    navigate(`${id}`)
+    navigate(id)
   }
   return (
     <>
       <div>
-        {hands?.map(hand => (
-          <div>{hand.id}</div>
+        {hands?.map(({ id }) => (
+          <div key={id}>{id}</div>
         ))}
       </div>
       <button onClick={createNewHand}>Nouvelle donne</button>
