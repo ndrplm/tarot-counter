@@ -27,8 +27,7 @@ const Index = () => {
     setPlayers(players => players.filter(({ name }) => name !== selectedPlayer.name))
   }
 
-  const onValidateClick = (e: React.MouseEvent) => {
-    e.preventDefault()
+  const onValidateClick = () => {
     if (isInvalid) return
     navigate('hands')
   }
@@ -50,9 +49,7 @@ const Index = () => {
 
       <div>
         {isInvalid && <span>Le nombre de joueur doit être compris entre 3 et 5</span>}
-        <button type="submit" onClick={onValidateClick}>
-          Valider
-        </button>
+        <button onClick={onValidateClick}>Valider</button>
       </div>
     </>
   )
