@@ -25,11 +25,11 @@ const Index = () => {
     if (players.length === MAX_PLAYERS) return
     if (players.some(player => player.name === inputRef?.current?.value)) return
 
-    setPlayers([...players, { name: inputRef.current.value, id: Date.now() }])
+    setPlayers([...players, { name: inputRef.current.value, id: `${Date.now()}` }])
     inputRef.current.value = ''
   }
 
-  const removePlayer = (playerId: number) => {
+  const removePlayer = (playerId: string) => {
     if (players.length === MIN_PLAYERS) return
 
     setPlayers(players => players.filter(({ id }) => id !== playerId))

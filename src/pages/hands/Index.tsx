@@ -6,8 +6,8 @@ const Index = () => {
   const hands: Hand[] = sessionStorage.getItem('hands') ? JSON.parse(sessionStorage.hands) : [] // not very elegant but i'll find another way to have a default empty array
 
   const createNewHand = () => {
-    const id = Date.now()
-    hands.push({ id: `${id}` })
+    const id: string = `${Date.now()}`
+    hands.push({ id })
     sessionStorage.setItem('hands', JSON.stringify(hands))
     navigate(id)
   }
