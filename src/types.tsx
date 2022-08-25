@@ -1,6 +1,6 @@
 export interface Player {
   name: string
-  id: number
+  id: string
 }
 
 export interface Game {
@@ -9,7 +9,7 @@ export interface Game {
 }
 
 export interface Hand {
-  id: string
+  id?: string
   taker?: Taker
   defense?: Defense
 }
@@ -21,13 +21,13 @@ export interface Defense {
 }
 
 export interface Taker {
-  player: Player
-  partner?: Player
-  bet: Bet
-  oudlersCount: number
-  pointsCount: number
-  bonuses: Bonus[]
-  score: number
+  playerId?: string
+  partnerId?: string
+  betName?: string
+  oudlersCount?: number
+  pointsCount?: number
+  bonuses?: Bonus[]
+  score?: number
 }
 
 export interface Bonus {
