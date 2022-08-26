@@ -1,9 +1,12 @@
+import { createContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Hand } from '../../types'
 
+export const HandsContext = createContext<Hand[]>([])
+
 const Index = () => {
   const navigate = useNavigate()
-  const hands: Hand[] = sessionStorage.getItem('hands') ? JSON.parse(sessionStorage.hands) : [] // not very elegant but i'll find another way to have a default empty array
+  const hands: Hand[] = JSON.parse(sessionStorage.hands) || [] // not very elegant but i'll find another way to have a default empty array
 
   const createNewHand = () => {
     const id: string = `${Date.now()}`
@@ -12,14 +15,14 @@ const Index = () => {
     navigate(id)
   }
   return (
-    <>
+    <HandsContext.Provider value={hands}>
       <div>
         {hands?.map(({ id }) => (
           <div key={id}>{id}</div>
         ))}
       </div>
       <button onClick={createNewHand}>Nouvelle donne</button>
-    </>
+    </HandsContext.Provider>
   )
 }
 

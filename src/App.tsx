@@ -4,20 +4,30 @@ import Index from './pages/Index'
 import HandsIndex from './pages/hands/Index'
 import HandIdIndex from './pages/hands/_hand_id/Index'
 import NotFound from './pages/NotFound'
+import { createContext } from 'react'
+import { Player } from './types'
 
-const App = () => (
-  <BrowserRouter>
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="hands">
-          <Route path=":id" element={<HandIdIndex />} />
-          <Route index element={<HandsIndex />} />
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Layout>
-  </BrowserRouter>
-)
+export const PlayersContext = createContext<Player[]>([])
+
+const App = () => {
+  const players: Player[] = JSON.parse(sessionStorage.players)
+
+  return (
+    <BrowserRouter>
+      <PlayersContext.Provider value={players}>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="hands">
+              <Route path=":id" element={<HandIdIndex />} />
+              <Route index element={<HandsIndex />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Layout>
+      </PlayersContext.Provider>
+    </BrowserRouter>
+  )
+}
 
 export default App
