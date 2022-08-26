@@ -14,11 +14,11 @@ export type StateType = {
 }
 
 export const multipliers = {
-  oudler: 5,
-  king: 5,
-  queen: 4,
-  knight: 3,
-  jack: 2,
+  oudler: 4.5,
+  king: 4.5,
+  queen: 3.5,
+  knight: 2.5,
+  jack: 1.5,
   other: 0.5,
 } as const
 
