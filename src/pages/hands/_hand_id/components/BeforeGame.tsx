@@ -1,7 +1,10 @@
 import { Field, Form, Formik } from 'formik'
+import { useContext } from 'react'
 import { useParams } from 'react-router-dom'
+import { PlayersContext } from '../../../../App'
 
 import { Bet, Hand, Player } from '../../../../types'
+import { HandsContext } from '../../Index'
 
 const BETS: Bet[] = [
   {
@@ -29,13 +32,13 @@ type MyInitialValues = {
 
 type Props = {
   setStep: React.Dispatch<React.SetStateAction<'beforeGame' | 'afterGame'>>
-  hands: Hand[]
   defaultHand: Hand | undefined
-  players: Player[]
 }
 
-const BeforeGame = ({ setStep, hands, defaultHand, players }: Props) => {
+const BeforeGame = ({ setStep, defaultHand }: Props) => {
   const { id } = useParams()
+  const hands: Hand[] = useContext(HandsContext)
+  const players: Player[] = useContext(PlayersContext)
 
   const initialValues: MyInitialValues = {
     taker: defaultHand?.taker?.playerId || '',

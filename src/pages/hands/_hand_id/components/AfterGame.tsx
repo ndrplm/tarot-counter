@@ -1,50 +1,53 @@
-import { Field, Form, Formik } from 'formik'
+import { Form, Formik } from 'formik'
 
-import { Bonus, Hand, Player } from '../../../../types'
+import BonusesInput from './inputs/BonusesInput'
+import HandsCount from './inputs/HandsCountInput'
+import OudlersInput from './inputs/OudlersInput'
+import PartnerInput from './inputs/PartnerInput'
 
 type Props = {
   setStep: React.Dispatch<React.SetStateAction<'beforeGame' | 'afterGame'>>
-  hands: Hand[]
-  defaultHand: Hand | undefined
-  players: Player[]
 }
 
 type MyInitialValues = {
   partner: string
   oudlers: number
-  bonuses: Bonus[]
+  bonuses: any // to replace
+  handCount?: number
 }
 
-const AfterGame = ({ setStep, hands, defaultHand, players }: Props) => {
+const AfterGame = ({ setStep }: Props) => {
   const initialValues = {
     partner: '',
     oudlers: 0,
-    bonuses: [],
+    bonuses: {
+      poignee: {
+        checked: false,
+        player: '',
+      },
+      chelem: {
+        checked: false,
+        player: '',
+      },
+      petit: {
+        checked: false,
+        player: '',
+      },
+    },
+    handCount: 0,
   }
 
   const onSubmit = (values: MyInitialValues) => {
     console.log(values)
   }
+
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       <Form>
-        <div>
-          {players.length === 5 && (
-            <fieldset>
-              <legend>Quel joueur a été appelé ?</legend>
-              {players.map(({ name, id }) => (
-                <div key={id}>
-                  <label>
-                    <Field type="radio" name="partner" value={id} />
-                    {name}
-                  </label>
-                </div>
-              ))}
-            </fieldset>
-          )}
-        </div>
-
-        <div></div>
+        <PartnerInput />
+        <OudlersInput />
+        <BonusesInput />
+        <HandsCount />
         <button onClick={() => setStep('beforeGame')}>Retour</button>
         <button type="submit">Valider</button>
       </Form>
