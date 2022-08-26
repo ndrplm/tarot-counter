@@ -1,6 +1,6 @@
 import { useFormikContext } from 'formik'
 import { useContext, useEffect, useReducer } from 'react'
-import { pointsReducer } from '../../helpers/helpers'
+import { objSum, pointsReducer } from '../../helpers/helpers'
 import { HandContext } from '../../Index'
 import { InputType } from '../../types'
 
@@ -46,8 +46,7 @@ const AutomaticCount = () => {
   const [total, dispatch] = useReducer(pointsReducer, initialState)
 
   useEffect(() => {
-    const values = Object.values(total)
-    const sum = values.reduce((acc, val) => acc + val)
+    const sum = objSum(total)
     setFieldValue('handCount', sum)
   }, [total, setFieldValue])
 
