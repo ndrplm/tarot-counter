@@ -1,36 +1,8 @@
 import { useFormikContext } from 'formik'
 import { useContext, useEffect, useReducer } from 'react'
+import { pointsReducer } from '../../helpers/helpers'
 import { HandContext } from '../../Index'
-
-type CardValuesKeys = keyof typeof multipliers
-
-interface CountAction {
-  type: CardValuesKeys
-  payload: number
-}
-type StateType = {
-  king: number
-  queen: number
-  knight: number
-  jack: number
-  oudler: number
-  other: number
-}
-
-type InputType = {
-  name: CardValuesKeys
-  label: string
-  max: number
-}
-
-const multipliers = {
-  oudler: 5,
-  king: 5,
-  queen: 4,
-  knight: 3,
-  jack: 2,
-  other: 0.5,
-} as const
+import { InputType } from '../../types'
 
 const INPUTS: InputType[] = [
   {
@@ -59,11 +31,6 @@ const INPUTS: InputType[] = [
     max: 62,
   },
 ]
-
-const pointsReducer = (state: StateType, { type, payload }: CountAction) => ({
-  ...state,
-  [type]: (state[type] = payload * multipliers[type]),
-})
 
 const AutomaticCount = () => {
   const { setFieldValue } = useFormikContext()
