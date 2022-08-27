@@ -31,7 +31,7 @@ const BeforeGame = ({ setStep }: Props) => {
   const handleSubmit = ({ taker }: MyInitialValues) => {
     const updatedHand: Hand = {
       ...hand,
-      taker: { ...taker },
+      taker: { ...hand.taker, ...taker },
       defendeurs: players.filter(player => player.id !== taker.playerId).map(player => player.id),
     }
     updateHand(updatedHand)

@@ -22,7 +22,6 @@ export function useUpdateHand() {
     let handsCopy = [...hands]
     const updatedHandIndex = hands.findIndex((hand: Hand) => hand.id === id)
     handsCopy[updatedHandIndex] = updatedHand
-
     sessionStorage.setItem('hands', JSON.stringify(handsCopy))
     setHands(handsCopy)
     setHand(updatedHand)

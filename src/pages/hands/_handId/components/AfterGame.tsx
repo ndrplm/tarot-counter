@@ -52,8 +52,8 @@ const AfterGame = ({ setStep }: Props) => {
     ],
   }
 
-  const onSubmit = (values: MyInitialValues) => {
-    const updatedHand = { ...hand, ...values }
+  const onSubmit = ({ taker, bonuses }: MyInitialValues) => {
+    const updatedHand = { ...hand, taker: { ...hand.taker, ...taker }, bonuses }
     updateHand(updatedHand)
   }
 
