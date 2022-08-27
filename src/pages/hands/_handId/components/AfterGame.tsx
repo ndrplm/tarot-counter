@@ -15,7 +15,7 @@ type Props = {
 
 type FormikBonusType = Bonus & { checked: boolean }
 
-type MyInitialValues = {
+export type AfterGameInitialValues = {
   taker: Taker
   bonuses: FormikBonusType[]
 }
@@ -24,7 +24,7 @@ const AfterGame = ({ setStep }: Props) => {
   const [hand] = useContext(HandContext)
   const updateHand = useUpdateHand()
 
-  const initialValues: MyInitialValues = {
+  const initialValues: AfterGameInitialValues = {
     taker: {
       partnerId: hand?.taker?.partnerId || '',
       oudlersCount: hand?.taker?.oudlersCount || 0,
@@ -35,24 +35,24 @@ const AfterGame = ({ setStep }: Props) => {
         name: 'poignee',
         checked:
           hand?.bonuses?.some(bonus => bonus.name === 'poignee' && !!bonus.playersID) || false,
-        playersID: [],
+        playersID: hand?.bonuses?.find(bonus => bonus.name === 'poignee')?.playersID || [],
       },
       {
         name: 'chelem',
         checked:
           hand?.bonuses?.some(bonus => bonus.name === 'chelem' && !!bonus.playersID) || false,
-        playersID: [],
+        playersID: hand?.bonuses?.find(bonus => bonus.name === 'chelem')?.playersID || [],
       },
       {
         name: 'petitAuBout',
         checked:
           hand?.bonuses?.some(bonus => bonus.name === 'petitAuBout' && !!bonus.playersID) || false,
-        playersID: [],
+        playersID: hand?.bonuses?.find(bonus => bonus.name === 'petitAuBout')?.playersID || [],
       },
     ],
   }
 
-  const onSubmit = ({ taker, bonuses }: MyInitialValues) => {
+  const onSubmit = ({ taker, bonuses }: AfterGameInitialValues) => {
     const updatedHand = { ...hand, taker: { ...hand.taker, ...taker }, bonuses }
     updateHand(updatedHand)
   }
