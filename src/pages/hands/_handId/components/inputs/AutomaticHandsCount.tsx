@@ -62,7 +62,7 @@ export const cardValues = {
 
 export const pointsReducer = (state: StateType, { type, payload }: CountAction) => ({
   ...state,
-  [type]: (state[type] = payload + cardValues[type]),
+  [type]: (state[type] = payload * cardValues[type]),
 })
 
 const AutomaticCount = () => {
