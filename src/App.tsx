@@ -10,7 +10,7 @@ import { Player } from './types'
 export const PlayersContext = createContext<Player[]>([])
 
 const App = () => {
-  const players: Player[] = JSON.parse(sessionStorage.players)
+  const players: Player[] = JSON.parse(sessionStorage.players || null) || []
 
   return (
     <BrowserRouter>

@@ -16,7 +16,6 @@ export const HandContext = createContext<Hand | undefined>({})
 const Index = () => {
   const { id } = useParams()
   const hands: Hand[] = useContext(HandsContext)
-
   const [step, setStep] = useState<StepsKey>('beforeGame')
   const CurrentStep = STEPS[step]
   const defaultHand: Hand | undefined = hands.find((hand: Hand) => hand.id === id)

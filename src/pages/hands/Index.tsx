@@ -6,7 +6,7 @@ export const HandsContext = createContext<Hand[]>([])
 
 const Index = () => {
   const navigate = useNavigate()
-  const hands: Hand[] = JSON.parse(sessionStorage.hands) || [] // not very elegant but i'll find another way to have a default empty array
+  const hands: Hand[] = JSON.parse(sessionStorage.hands || null) || [] // not very elegant but i'll find another way to have a default empty array
 
   const createNewHand = () => {
     const id: string = `${Date.now()}`

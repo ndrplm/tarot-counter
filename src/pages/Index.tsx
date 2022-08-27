@@ -8,9 +8,7 @@ const MIN_PLAYERS = 3
 
 const Index = () => {
   const navigate = useNavigate()
-  const defaultPlayers: Player[] = sessionStorage.getItem('players')
-    ? JSON.parse(sessionStorage.players)
-    : [] // not very elegant but i'll find another way to have a default empty array
+  const defaultPlayers: Player[] = JSON.parse(sessionStorage.players || null) || []
 
   const inputRef = useRef<HTMLInputElement>(null)
   const [players, setPlayers] = useState<Player[]>(defaultPlayers)
