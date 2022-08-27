@@ -80,7 +80,7 @@ const AutomaticCount = () => {
 
   useEffect(() => {
     const sum = objSum(total)
-    setFieldValue('handCount', sum)
+    setFieldValue('taker.pointsCount', sum)
   }, [total, setFieldValue])
 
   return (

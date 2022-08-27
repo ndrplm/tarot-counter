@@ -12,7 +12,7 @@ const PartnerInput = () => {
           {players.map(({ name, id }) => (
             <div key={id}>
               <label>
-                <Field type="radio" name="partner" value={id} />
+                <Field type="radio" name="taker.partnerId" value={id} />
                 {name}
               </label>
             </div>

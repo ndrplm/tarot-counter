@@ -8,16 +8,13 @@ export interface Game {
   hands?: Hand[]
 }
 
+export type ID = string
+
 export interface Hand {
   id?: string
   taker?: Taker
-  defense?: Defense
-}
-
-export interface Defense {
-  players: Player[]
-  bonuses: Bonus[]
-  score: number
+  defendeurs?: ID[]
+  bonuses?: Bonus[]
 }
 
 export interface Taker {
@@ -26,17 +23,9 @@ export interface Taker {
   betName?: string
   oudlersCount?: number
   pointsCount?: number
-  bonuses?: Bonus[]
-  score?: number
 }
 
 export interface Bonus {
-  name: 'chelem' | 'poignée' | 'petit au bout'
-  points: number
-  isMultiplied: boolean
-}
-
-export interface Bet {
-  name: 'petite' | 'garde' | 'garde sans' | 'garde contre'
-  multiplier: number
+  name?: 'chelem' | 'poignee' | 'petitAuBout'
+  players?: ID[]
 }

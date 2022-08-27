@@ -3,32 +3,14 @@ import { useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { PlayersContext } from '../../../../App'
 
-import { Bet, Hand } from '../../../../types'
+import { Hand, Taker } from '../../../../types'
 import { HandsContext } from '../../Context'
 import { HandContext } from '../Index'
 
-const BETS: Bet[] = [
-  {
-    name: 'petite',
-    multiplier: 1,
-  },
-  {
-    name: 'garde',
-    multiplier: 2,
-  },
-  {
-    name: 'garde sans',
-    multiplier: 4,
-  },
-  {
-    name: 'garde contre',
-    multiplier: 6,
-  },
-]
+const BETS = ['petite', 'garde', 'gardeSans', 'gardeContre'] as const
 
 type MyInitialValues = {
-  taker: string
-  bet: string
+  taker: Taker
 }
 
 type Props = {
@@ -41,33 +23,24 @@ const BeforeGame = ({ setStep }: Props) => {
   const [hands] = useContext(HandsContext)
   const [players] = useContext(PlayersContext)
 
-  console.log(hands)
-
   const initialValues: MyInitialValues = {
-    taker: hand?.taker?.playerId || '',
-    bet: hand?.taker?.betName || '',
+    taker: {
+      playerId: hand?.taker?.playerId || '',
+      betName: hand?.taker?.betName || '',
+    },
   }
 
-  const handleSubmit = ({ taker, bet }: MyInitialValues) => {
+  const handleSubmit = ({ taker }: MyInitialValues) => {
     const updatedHandIndex = hands.findIndex((hand: Hand) => hand.id === id)
-    hands[updatedHandIndex] = {
+    const updatedHand: Hand = {
       ...hand,
-      taker: {
-        playerId: taker,
-        betName: bet,
-      },
+      taker: { ...taker },
+      defendeurs: players.filter(player => player.id !== taker.playerId).map(player => player.id),
     }
-    console.log(updatedHandIndex)
-    console.log('curenthand: ', hands[updatedHandIndex])
+    hands[updatedHandIndex] = updatedHand
     sessionStorage.setItem('hands', JSON.stringify(hands))
     // I don't get why this can be undefined
-    setHand?.({
-      ...hand,
-      taker: {
-        playerId: taker,
-        betName: bet,
-      },
-    })
+    setHand?.(updatedHand)
     setStep('afterGame')
   }
 
@@ -79,7 +52,7 @@ const BeforeGame = ({ setStep }: Props) => {
           {players.map(({ name, id }) => (
             <div key={id}>
               <label>
-                <Field type="radio" name="taker" value={id} />
+                <Field type="radio" name="taker.playerId" value={id} />
                 {name}
               </label>
             </div>
@@ -88,10 +61,10 @@ const BeforeGame = ({ setStep }: Props) => {
 
         <fieldset>
           <legend>Quelle est son enchère</legend>
-          {BETS.map(({ name }) => (
+          {BETS.map(name => (
             <div key={name}>
               <label>
-                <Field type="radio" name="bet" value={name} />
+                <Field type="radio" name="taker.betName" value={name} />
                 {name}
               </label>
             </div>

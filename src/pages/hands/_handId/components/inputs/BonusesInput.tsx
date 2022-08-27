@@ -6,6 +6,8 @@ import { Player } from '../../../../../types'
 
 const BONUSES = ['chelem', 'poignee', 'petit'] as const
 
+// TODO to rework
+
 const BonusesInput = () => {
   const [players] = useContext(PlayersContext)
   return (
@@ -17,7 +19,7 @@ const BonusesInput = () => {
             <div>
               <Field type="checkbox" name={`bonuses[${bonus}].checked`} />
               {bonus}
-              <Field as="select" name={`bonuses[${bonus}].player`}>
+              <Field as="select" multiple name={`bonuses[${bonus}].player`}>
                 {players.map((player: Player) => (
                   <option value={player.id}>{player.name}</option>
                 ))}

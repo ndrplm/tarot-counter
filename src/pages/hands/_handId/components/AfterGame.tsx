@@ -1,4 +1,5 @@
 import { Form, Formik } from 'formik'
+import { Bonus, Taker } from '../../../../types'
 
 import BonusesInput from './inputs/BonusesInput'
 import HandsCount from './inputs/HandsCountInput'
@@ -9,32 +10,37 @@ type Props = {
   setStep: React.Dispatch<React.SetStateAction<'beforeGame' | 'afterGame'>>
 }
 
+type FormikBonusType = Bonus & { checked: boolean }
+
 type MyInitialValues = {
-  partner: string
-  oudlers: number
-  bonuses: any // to replace
-  handCount?: number
+  taker: Taker
+  bonuses: FormikBonusType[]
 }
 
 const AfterGame = ({ setStep }: Props) => {
-  const initialValues = {
-    partner: '',
-    oudlers: 0,
-    bonuses: {
-      poignee: {
-        checked: false,
-        player: '',
-      },
-      chelem: {
-        checked: false,
-        player: '',
-      },
-      petit: {
-        checked: false,
-        player: '',
-      },
+  const initialValues: MyInitialValues = {
+    taker: {
+      partnerId: '',
+      oudlersCount: 0,
+      pointsCount: 0,
     },
-    handCount: 0,
+    bonuses: [
+      {
+        name: 'poignee',
+        checked: false,
+        players: [],
+      },
+      {
+        name: 'chelem',
+        checked: false,
+        players: [],
+      },
+      {
+        name: 'petitAuBout',
+        checked: false,
+        players: [],
+      },
+    ],
   }
 
   const onSubmit = (values: MyInitialValues) => {
