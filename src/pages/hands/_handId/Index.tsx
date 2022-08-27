@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react'
 import AfterGame from './components/AfterGame'
 import BeforeGame from './components/BeforeGame'
-import { Hand } from './../../../types'
+import { Hand } from '../../../types'
 import { useParams } from 'react-router-dom'
 import { HandsContext } from '../Index'
 

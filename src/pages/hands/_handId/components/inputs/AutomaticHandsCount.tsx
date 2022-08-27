@@ -1,8 +1,8 @@
 import { useFormikContext } from 'formik'
 import { useContext, useEffect, useReducer } from 'react'
-import { objSum, pointsReducer } from '../../helpers/helpers'
+import { objSum } from '../../helpers/helpers'
 import { HandContext } from '../../Index'
-import { InputType } from '../../types'
+import { CountAction, multipliers, StateType, InputType } from '../../types'
 
 const INPUTS: InputType[] = [
   {
@@ -31,6 +31,11 @@ const INPUTS: InputType[] = [
     max: 62,
   },
 ]
+
+export const pointsReducer = (state: StateType, { type, payload }: CountAction) => ({
+  ...state,
+  [type]: (state[type] = payload + multipliers[type]),
+})
 
 const AutomaticCount = () => {
   const { setFieldValue } = useFormikContext()
