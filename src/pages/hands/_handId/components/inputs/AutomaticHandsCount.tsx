@@ -67,13 +67,13 @@ export const pointsReducer = (state: StateType, { type, payload }: CountAction) 
 
 const AutomaticCount = () => {
   const { setFieldValue } = useFormikContext()
-  const defaultHand = useContext(HandContext)
+  const [hand] = useContext(HandContext)
   const initialState = {
     king: 0,
     queen: 0,
     knight: 0,
     jack: 0,
-    oudler: defaultHand?.taker?.oudlersCount || 0,
+    oudler: hand?.taker?.oudlersCount || 0,
     other: 0,
   }
   const [total, dispatch] = useReducer(pointsReducer, initialState)

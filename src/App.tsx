@@ -4,21 +4,28 @@ import Index from './pages/Index'
 import HandsIndex from './pages/hands/Index'
 import HandIdIndex from './pages/hands/_handId/Index'
 import NotFound from './pages/NotFound'
-import { createContext } from 'react'
+import { createContext, useState } from 'react'
 import { Player } from './types'
+import HandsContextComponent from './pages/hands/Context'
 
-export const PlayersContext = createContext<Player[]>([])
+type PlayersContextTuple = [
+  players: Player[],
+  setHand: React.Dispatch<React.SetStateAction<Player[]>>,
+]
+// this smells... TODO: check how I can populate my context gradually without having to check for undefined or have an empty arrow funct
+export const PlayersContext = createContext<PlayersContextTuple>([[], () => {}])
 
 const App = () => {
-  const players: Player[] = JSON.parse(sessionStorage.players || null) || []
+  const defaultPlayers: Player[] = JSON.parse(sessionStorage.players || null) || []
+  const [players, setPlayers] = useState(defaultPlayers)
 
   return (
     <BrowserRouter>
-      <PlayersContext.Provider value={players}>
+      <PlayersContext.Provider value={[players, setPlayers]}>
         <Layout>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="hands">
+            <Route path="hands" element={<HandsContextComponent />}>
               <Route path=":id" element={<HandIdIndex />} />
               <Route index element={<HandsIndex />} />
             </Route>

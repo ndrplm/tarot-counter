@@ -1,17 +1,16 @@
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { PlayersContext } from '../App'
 import Title from '../design_system/Title'
-import { Player } from '../types'
 
 const MAX_PLAYERS = 5
 const MIN_PLAYERS = 3
 
 const Index = () => {
   const navigate = useNavigate()
-  const defaultPlayers: Player[] = JSON.parse(sessionStorage.players || null) || []
+  const [players, setPlayers] = useContext(PlayersContext)
 
   const inputRef = useRef<HTMLInputElement>(null)
-  const [players, setPlayers] = useState<Player[]>(defaultPlayers)
   const isInvalid = players.length < MIN_PLAYERS || players.length > MAX_PLAYERS
 
   useEffect(() => {

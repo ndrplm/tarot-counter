@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import { PlayersContext } from '../../../../../App'
 
 const PartnerInput = () => {
-  const players = useContext(PlayersContext)
+  const [players] = useContext(PlayersContext)
   return (
     <div>
       {players.length === 5 && (

@@ -3,8 +3,9 @@ import { useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { PlayersContext } from '../../../../App'
 
-import { Bet, Hand, Player } from '../../../../types'
-import { HandsContext } from '../../Index'
+import { Bet, Hand } from '../../../../types'
+import { HandsContext } from '../../Context'
+import { HandContext } from '../Index'
 
 const BETS: Bet[] = [
   {
@@ -32,29 +33,41 @@ type MyInitialValues = {
 
 type Props = {
   setStep: React.Dispatch<React.SetStateAction<'beforeGame' | 'afterGame'>>
-  defaultHand: Hand | undefined
 }
 
-const BeforeGame = ({ setStep, defaultHand }: Props) => {
+const BeforeGame = ({ setStep }: Props) => {
   const { id } = useParams()
-  const hands: Hand[] = useContext(HandsContext)
-  const players: Player[] = useContext(PlayersContext)
+  const [hand, setHand] = useContext(HandContext)
+  const [hands] = useContext(HandsContext)
+  const [players] = useContext(PlayersContext)
+
+  console.log(hands)
 
   const initialValues: MyInitialValues = {
-    taker: defaultHand?.taker?.playerId || '',
-    bet: defaultHand?.taker?.betName || '',
+    taker: hand?.taker?.playerId || '',
+    bet: hand?.taker?.betName || '',
   }
 
   const handleSubmit = ({ taker, bet }: MyInitialValues) => {
     const updatedHandIndex = hands.findIndex((hand: Hand) => hand.id === id)
     hands[updatedHandIndex] = {
-      ...defaultHand,
+      ...hand,
       taker: {
         playerId: taker,
         betName: bet,
       },
     }
+    console.log(updatedHandIndex)
+    console.log('curenthand: ', hands[updatedHandIndex])
     sessionStorage.setItem('hands', JSON.stringify(hands))
+    // I don't get why this can be undefined
+    setHand?.({
+      ...hand,
+      taker: {
+        playerId: taker,
+        betName: bet,
+      },
+    })
     setStep('afterGame')
   }
 

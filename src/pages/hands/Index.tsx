@@ -1,28 +1,26 @@
-import { createContext } from 'react'
+import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Hand } from '../../types'
-
-export const HandsContext = createContext<Hand[]>([])
+import { HandsContext } from './Context'
 
 const Index = () => {
   const navigate = useNavigate()
-  const hands: Hand[] = JSON.parse(sessionStorage.hands || null) || [] // not very elegant but i'll find another way to have a default empty array
-
+  const [hands, setHands] = useContext(HandsContext)
   const createNewHand = () => {
     const id: string = `${Date.now()}`
     hands.push({ id })
     sessionStorage.setItem('hands', JSON.stringify(hands))
+    setHands(hands)
     navigate(id)
   }
   return (
-    <HandsContext.Provider value={hands}>
+    <>
       <div>
-        {hands?.map(({ id }) => (
+        {hands.map(({ id }) => (
           <div key={id}>{id}</div>
         ))}
       </div>
       <button onClick={createNewHand}>Nouvelle donne</button>
-    </HandsContext.Provider>
+    </>
   )
 }
 

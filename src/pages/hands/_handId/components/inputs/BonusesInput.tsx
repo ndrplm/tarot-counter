@@ -7,7 +7,7 @@ import { Player } from '../../../../../types'
 const BONUSES = ['chelem', 'poignee', 'petit'] as const
 
 const BonusesInput = () => {
-  const players = useContext(PlayersContext)
+  const [players] = useContext(PlayersContext)
   return (
     <FieldArray name="bonuses">
       {() => (
