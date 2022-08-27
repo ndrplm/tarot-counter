@@ -10,9 +10,9 @@ const STEPS = {
   afterGame: AfterGame,
 }
 export type StepsKey = keyof typeof STEPS
-type ContextTuple = [hand?: Hand, setHand?: React.Dispatch<React.SetStateAction<Hand>>]
+type ContextTuple = [hand: Hand, setHand: React.Dispatch<React.SetStateAction<Hand>>]
 
-export const HandContext = createContext<ContextTuple>([])
+export const HandContext = createContext<ContextTuple>([{}, () => {}])
 
 const Index = () => {
   const { id } = useParams()

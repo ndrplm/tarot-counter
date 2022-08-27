@@ -1,5 +1,8 @@
 import { Form, Formik } from 'formik'
+import { useContext } from 'react'
 import { Bonus, Taker } from '../../../../types'
+import { useUpdateHand } from '../helpers/helpers'
+import { HandContext } from '../Index'
 
 import BonusesInput from './inputs/BonusesInput'
 import HandsCount from './inputs/HandsCountInput'
@@ -18,33 +21,40 @@ type MyInitialValues = {
 }
 
 const AfterGame = ({ setStep }: Props) => {
+  const [hand] = useContext(HandContext)
+  const updateHand = useUpdateHand()
+
   const initialValues: MyInitialValues = {
     taker: {
-      partnerId: '',
-      oudlersCount: 0,
-      pointsCount: 0,
+      partnerId: hand?.taker?.partnerId || '',
+      oudlersCount: hand?.taker?.oudlersCount || 0,
+      pointsCount: hand?.taker?.pointsCount || 0,
     },
     bonuses: [
       {
         name: 'poignee',
-        checked: false,
-        players: [],
+        checked:
+          hand?.bonuses?.some(bonus => bonus.name === 'poignee' && !!bonus.playersID) || false,
+        playersID: [],
       },
       {
         name: 'chelem',
-        checked: false,
-        players: [],
+        checked:
+          hand?.bonuses?.some(bonus => bonus.name === 'chelem' && !!bonus.playersID) || false,
+        playersID: [],
       },
       {
         name: 'petitAuBout',
-        checked: false,
-        players: [],
+        checked:
+          hand?.bonuses?.some(bonus => bonus.name === 'petitAuBout' && !!bonus.playersID) || false,
+        playersID: [],
       },
     ],
   }
 
   const onSubmit = (values: MyInitialValues) => {
-    console.log(values)
+    const updatedHand = { ...hand, ...values }
+    updateHand(updatedHand)
   }
 
   return (

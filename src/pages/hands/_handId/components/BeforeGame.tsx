@@ -1,10 +1,9 @@
 import { Field, Form, Formik } from 'formik'
 import { useContext } from 'react'
-import { useParams } from 'react-router-dom'
 import { PlayersContext } from '../../../../App'
 
 import { Hand, Taker } from '../../../../types'
-import { HandsContext } from '../../Context'
+import { useUpdateHand } from '../helpers/helpers'
 import { HandContext } from '../Index'
 
 const BETS = ['petite', 'garde', 'gardeSans', 'gardeContre'] as const
@@ -18,10 +17,9 @@ type Props = {
 }
 
 const BeforeGame = ({ setStep }: Props) => {
-  const { id } = useParams()
-  const [hand, setHand] = useContext(HandContext)
-  const [hands] = useContext(HandsContext)
+  const [hand] = useContext(HandContext)
   const [players] = useContext(PlayersContext)
+  const updateHand = useUpdateHand()
 
   const initialValues: MyInitialValues = {
     taker: {
@@ -31,16 +29,12 @@ const BeforeGame = ({ setStep }: Props) => {
   }
 
   const handleSubmit = ({ taker }: MyInitialValues) => {
-    const updatedHandIndex = hands.findIndex((hand: Hand) => hand.id === id)
     const updatedHand: Hand = {
       ...hand,
       taker: { ...taker },
       defendeurs: players.filter(player => player.id !== taker.playerId).map(player => player.id),
     }
-    hands[updatedHandIndex] = updatedHand
-    sessionStorage.setItem('hands', JSON.stringify(hands))
-    // I don't get why this can be undefined
-    setHand?.(updatedHand)
+    updateHand(updatedHand)
     setStep('afterGame')
   }
 
