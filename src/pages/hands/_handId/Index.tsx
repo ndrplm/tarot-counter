@@ -3,7 +3,7 @@ import AfterGame from './components/AfterGame'
 import BeforeGame from './components/BeforeGame'
 import { Hand } from '../../../types'
 import { useParams } from 'react-router-dom'
-import { HandsContext } from '../Context'
+import { HandsContext } from '../../../App'
 
 const STEPS = {
   beforeGame: BeforeGame,

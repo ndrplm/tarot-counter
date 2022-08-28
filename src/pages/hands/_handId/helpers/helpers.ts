@@ -1,8 +1,7 @@
 import { useContext } from 'react'
 import { useParams } from 'react-router-dom'
-import { PlayersContext } from '../../../../App'
+import { HandsContext } from '../../../../App'
 import { Bonus, Hand, ID, Player } from '../../../../types'
-import { HandsContext } from '../../Context'
 import { HandContext } from '../Index'
 
 export type SumParam = {
