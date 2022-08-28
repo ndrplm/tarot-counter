@@ -1,4 +1,4 @@
-import { Hand, Player } from '../../../../types'
+import { Hand, Player } from '../../../../../types'
 // cases from the official rules: http://www.fftarot.fr/assets/documents/R-RO201206.pdf
 
 type TestGame = {
