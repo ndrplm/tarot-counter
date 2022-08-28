@@ -23,7 +23,7 @@ const Index = () => {
 
   return (
     <HandContext.Provider value={[hand, setHand]}>
-      <CurrentStep setStep={setStep} />)
+      <CurrentStep setStep={setStep} />
     </HandContext.Provider>
   )
 }

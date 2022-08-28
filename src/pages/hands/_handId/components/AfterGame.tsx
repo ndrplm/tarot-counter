@@ -68,8 +68,10 @@ const AfterGame = ({ setStep }: Props) => {
         <OudlersInput />
         <BonusesInput />
         <HandsCount />
-        <button onClick={() => setStep('beforeGame')}>Retour</button>
-        <button type="submit">Valider</button>
+        <div>
+          <button onClick={() => setStep('beforeGame')}>Retour</button>
+          <button type="submit">Valider</button>
+        </div>
       </Form>
     </Formik>
   )
