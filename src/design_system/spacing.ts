@@ -4,4 +4,4 @@ export const spacing = {
   m: '24px',
   s: '16px',
   xs: '8px',
-}
+} as const

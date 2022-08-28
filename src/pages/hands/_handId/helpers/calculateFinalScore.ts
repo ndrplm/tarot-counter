@@ -1,68 +1,11 @@
-import { useContext } from 'react'
-import { useParams } from 'react-router-dom'
-import { HandsContext } from '../../../../App'
+import {
+  BASE_POINTS,
+  BETS_MULTIPLIERS,
+  EXPECTED_POINTS,
+  PETIT_AU_BOUT_VALUE,
+  POIGNEE_VALUES,
+} from '../../../../tarotRules'
 import { Bonus, Hand, ID, Player } from '../../../../types'
-import { HandContext } from '../Index'
-
-export type SumParam = {
-  [index: string]: number
-}
-
-export function objSum(obj: SumParam) {
-  const values = Object.values(obj)
-  return values.reduce((acc, val) => acc + val)
-}
-
-export function useUpdateHand() {
-  const [hands, setHands] = useContext(HandsContext)
-  const [, setHand] = useContext(HandContext)
-  const { id } = useParams()
-
-  return (updatedHand: Hand) => {
-    let handsCopy = [...hands]
-    const updatedHandIndex = hands.findIndex((hand: Hand) => hand.id === id)
-    handsCopy[updatedHandIndex] = updatedHand
-    sessionStorage.setItem('hands', JSON.stringify(handsCopy))
-    setHands(handsCopy)
-    setHand(updatedHand)
-  }
-}
-
-const BASE_POINTS = 25
-
-type ExpectedPointsType = {
-  [index: number]: number
-}
-
-const EXPECTED_POINTS: ExpectedPointsType = {
-  0: 56,
-  1: 51,
-  2: 41,
-  3: 36,
-}
-
-type BetMultiplierType = {
-  [index: string]: 1 | 2 | 4 | 6
-}
-
-const BETS_MULTIPLIERS: BetMultiplierType = {
-  petite: 1,
-  garde: 2,
-  gardeSans: 4,
-  gardeContre: 6,
-}
-
-const POIGNEE_VALUES = {
-  '': 0,
-  simple: 20,
-  double: 30,
-  triple: 40,
-} as const
-
-const PETIT_AU_BOUT_VALUE = 10
-
-// Calcul points final
-// Score = (25 + Extra points + Petit au bout) X Contrat + Poignée + Chelem
 
 const calculateChelemValue = ({ done, announced }: Bonus): -200 | 0 | 200 | 400 => {
   if (announced) {
@@ -74,7 +17,6 @@ const calculateChelemValue = ({ done, announced }: Bonus): -200 | 0 | 200 | 400 
 }
 
 type WinnerType = 'taker' | 'defense'
-
 const calculatePetitAuBoutValue = (
   petitAuBout: Bonus,
   defendeurs: ID[],
@@ -86,15 +28,12 @@ const calculatePetitAuBoutValue = (
   return -petitAuBoutValue
 }
 
-const calculateTakerScore = ({
-  playersLength,
-  baseScore,
-  hasWon,
-}: {
+type CalculateTakerScoreParams = {
   playersLength: number
   baseScore: number
   hasWon: boolean
-}) => {
+}
+const calculateTakerScore = ({ playersLength, baseScore, hasWon }: CalculateTakerScoreParams) => {
   const multiplier = playersLength === 5 ? playersLength - 2 : playersLength - 1
   const score = baseScore * multiplier
   if (playersLength === 5) {
@@ -108,7 +47,8 @@ const calculateTakerScore = ({
   return { taker: hasWon ? score : -score }
 }
 
-const calculateDefenseScore = ({ baseScore, hasWon }: { baseScore: number; hasWon: boolean }) => {
+type CalculateDefenseScoreParams = { baseScore: number; hasWon: boolean }
+const calculateDefenseScore = ({ baseScore, hasWon }: CalculateDefenseScoreParams) => {
   return {
     defendeurs: hasWon ? baseScore : -baseScore,
   }

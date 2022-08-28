@@ -37,7 +37,7 @@ const ScoreTable = () => {
             () =>
               data.rows.reduce((sum: number, row: any) => {
                 if (row.values[player.id] !== '-') return parseInt(row.values[player.id]) + sum
-                return 0
+                return sum
               }, 0),
             [data.rows],
           )

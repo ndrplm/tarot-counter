@@ -1,6 +1,6 @@
 import { useFormikContext } from 'formik'
 import { useContext, useEffect, useReducer } from 'react'
-import { objSum } from '../../helpers/helpers'
+import { objSum } from '../../../../../utils/utils'
 import { HandContext } from '../../Index'
 
 export type CardType = keyof typeof cardValues

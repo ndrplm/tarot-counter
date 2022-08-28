@@ -1,5 +1,5 @@
+import { objSum } from '../../../utils/utils'
 import { CountAction, pointsReducer } from './components/inputs/AutomaticHandsCount'
-import { objSum } from './helpers/helpers'
 
 const initialState = {
   king: 0,

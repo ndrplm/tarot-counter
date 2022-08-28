@@ -2,8 +2,9 @@ import { Form, Formik } from 'formik'
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PlayersContext } from '../../../../App'
-import { Bonus, Taker } from '../../../../types'
-import { calculateFinalScore, useUpdateHand } from '../helpers/helpers'
+import { Bonus, ID, Taker } from '../../../../types'
+import { calculateFinalScore } from '../helpers/calculateFinalScore'
+import { useUpdateHand } from '../helpers/useUpdateHand'
 import { HandContext } from '../Index'
 
 import BonusesInput from './inputs/BonusesInput'
@@ -20,6 +21,7 @@ type FormikBonusType = Bonus & { checked: boolean }
 export type AfterGameInitialValues = {
   taker: Taker
   bonuses: FormikBonusType[]
+  defendeurs: ID[]
 }
 
 const AfterGame = ({ setStep }: Props) => {
@@ -58,10 +60,11 @@ const AfterGame = ({ setStep }: Props) => {
         announced: findBonus('chelem')?.announced || false,
       },
     ],
+    defendeurs: hand.defendeurs || [],
   }
 
-  const onSubmit = ({ taker, bonuses }: AfterGameInitialValues) => {
-    const updatedHand = { ...hand, taker: { ...hand.taker, ...taker }, bonuses }
+  const onSubmit = ({ taker, bonuses, defendeurs }: AfterGameInitialValues) => {
+    const updatedHand = { ...hand, taker: { ...hand.taker, ...taker }, bonuses, defendeurs }
     const score = calculateFinalScore(updatedHand, players)
     updateHand({ ...updatedHand, score })
     navigate(`/score?handId=${hand.id}`)

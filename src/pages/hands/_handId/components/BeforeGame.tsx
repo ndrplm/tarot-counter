@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import { PlayersContext } from '../../../../App'
 
 import { Hand, Taker } from '../../../../types'
-import { useUpdateHand } from '../helpers/helpers'
+import { useUpdateHand } from '../helpers/useUpdateHand'
 import { HandContext } from '../Index'
 
 const BETS = ['petite', 'garde', 'gardeSans', 'gardeContre'] as const
