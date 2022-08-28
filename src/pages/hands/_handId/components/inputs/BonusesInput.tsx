@@ -12,6 +12,20 @@ import { AfterGameInitialValues } from '../AfterGame'
 const BonusesInput = () => {
   const [players] = useContext(PlayersContext)
   const { values, setFieldValue } = useFormikContext<AfterGameInitialValues>()
+  // reset the players field when the checkbox is unchecked
+  const onCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, bonusIndex: number) => {
+    setFieldValue(`bonuses[${bonusIndex}].checked`, e.target.checked)
+    if (!e.target.checked) setFieldValue(`bonuses[${bonusIndex}].playersID`, [])
+  }
+
+  // Handle multi select
+  const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>, bonusIndex: number) => {
+    setFieldValue(
+      `bonuses[${bonusIndex}].playersID`,
+      [].slice.call(e.target.selectedOptions).map((option: HTMLOptionElement) => option.value),
+    )
+  }
+
   return (
     <FieldArray name="bonuses">
       {() => (
@@ -22,19 +36,20 @@ const BonusesInput = () => {
             return (
               <div key={name}>
                 <>
-                  <Field type="checkbox" name={`bonuses[${bonusIndex}].checked`} />
+                  <Field
+                    type="checkbox"
+                    name={`bonuses[${bonusIndex}].checked`}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      onCheckboxChange(e, bonusIndex)
+                    }
+                  />
                   {name}
                   <Field
                     as="select"
                     multiple
                     name={`bonuses[${bonusIndex}].playersID`}
-                    onChange={(evt: React.ChangeEvent<HTMLSelectElement>) =>
-                      setFieldValue(
-                        `bonuses[${bonusIndex}].playersID`,
-                        [].slice
-                          .call(evt.target.selectedOptions)
-                          .map((option: HTMLOptionElement) => option.value),
-                      )
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                      onSelectChange(e, bonusIndex)
                     }
                   >
                     {players.map((player: Player) => (

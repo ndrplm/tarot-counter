@@ -34,19 +34,23 @@ const AfterGame = ({ setStep }: Props) => {
       {
         name: 'poignee',
         checked:
-          hand?.bonuses?.some(bonus => bonus.name === 'poignee' && !!bonus.playersID) || false,
+          hand?.bonuses?.some(bonus => bonus.name === 'poignee' && bonus.playersID.length > 0) ||
+          false,
         playersID: hand?.bonuses?.find(bonus => bonus.name === 'poignee')?.playersID || [],
       },
       {
         name: 'chelem',
         checked:
-          hand?.bonuses?.some(bonus => bonus.name === 'chelem' && !!bonus.playersID) || false,
+          hand?.bonuses?.some(bonus => bonus.name === 'chelem' && bonus.playersID.length > 0) ||
+          false,
         playersID: hand?.bonuses?.find(bonus => bonus.name === 'chelem')?.playersID || [],
       },
       {
         name: 'petitAuBout',
         checked:
-          hand?.bonuses?.some(bonus => bonus.name === 'petitAuBout' && !!bonus.playersID) || false,
+          hand?.bonuses?.some(
+            bonus => bonus.name === 'petitAuBout' && bonus.playersID.length > 0,
+          ) || false,
         playersID: hand?.bonuses?.find(bonus => bonus.name === 'petitAuBout')?.playersID || [],
       },
     ],

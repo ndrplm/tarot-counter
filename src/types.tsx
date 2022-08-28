@@ -26,6 +26,6 @@ export interface Taker {
 }
 
 export interface Bonus {
-  name?: 'chelem' | 'poignee' | 'petitAuBout'
-  playersID?: ID[]
+  name: 'chelem' | 'poignee' | 'petitAuBout'
+  playersID: ID[]
 }
