@@ -27,5 +27,9 @@ export interface Taker {
 
 export interface Bonus {
   name: 'chelem' | 'poignee' | 'petitAuBout'
-  playersID: ID[]
+  playerID: ID
+  // this could have been achieved with extends but I struggled with the implementation
+  type?: '' | 'simple' | 'double' | 'triple'
+  done?: boolean
+  announced?: boolean
 }

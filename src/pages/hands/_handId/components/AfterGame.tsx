@@ -24,6 +24,8 @@ const AfterGame = ({ setStep }: Props) => {
   const [hand] = useContext(HandContext)
   const updateHand = useUpdateHand()
 
+  const findBonus = (bonusName: string) => hand?.bonuses?.find(bonus => bonus.name === bonusName)
+
   const initialValues: AfterGameInitialValues = {
     taker: {
       partnerId: hand?.taker?.partnerId || '',
@@ -33,25 +35,23 @@ const AfterGame = ({ setStep }: Props) => {
     bonuses: [
       {
         name: 'poignee',
-        checked:
-          hand?.bonuses?.some(bonus => bonus.name === 'poignee' && bonus.playersID.length > 0) ||
-          false,
-        playersID: hand?.bonuses?.find(bonus => bonus.name === 'poignee')?.playersID || [],
+        type: findBonus('poignee')?.type || '',
+        checked: hand?.bonuses?.some(bonus => bonus.name === 'poignee' && bonus.playerID) || false,
+        playerID: findBonus('poignee')?.playerID || '',
       },
       {
         name: 'chelem',
-        checked:
-          hand?.bonuses?.some(bonus => bonus.name === 'chelem' && bonus.playersID.length > 0) ||
-          false,
-        playersID: hand?.bonuses?.find(bonus => bonus.name === 'chelem')?.playersID || [],
+        checked: hand?.bonuses?.some(bonus => bonus.name === 'chelem' && bonus.playerID) || false,
+        playerID: findBonus('chelem')?.playerID || '',
+        done: findBonus('chelem')?.done || false,
+        announced: findBonus('chelem')?.announced || false,
       },
       {
         name: 'petitAuBout',
         checked:
-          hand?.bonuses?.some(
-            bonus => bonus.name === 'petitAuBout' && bonus.playersID.length > 0,
-          ) || false,
-        playersID: hand?.bonuses?.find(bonus => bonus.name === 'petitAuBout')?.playersID || [],
+          hand?.bonuses?.some(bonus => bonus.name === 'petitAuBout' && bonus.playerID.length > 0) ||
+          false,
+        playerID: findBonus('petitAuBout')?.playerID || '',
       },
     ],
   }
