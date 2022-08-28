@@ -15,7 +15,7 @@ export interface Hand {
   taker?: Taker
   defendeurs?: ID[]
   bonuses?: Bonus[]
-  score?: { taker: number; defendeurs: number }
+  score?: { taker: number; defendeurs: number; partner?: number }
 }
 
 export interface Taker {
