@@ -1,7 +1,8 @@
 import { Form, Formik } from 'formik'
 import { useContext } from 'react'
+import { PlayersContext } from '../../../../App'
 import { Bonus, Taker } from '../../../../types'
-import { useUpdateHand } from '../helpers/helpers'
+import { calculateFinalScore, useUpdateHand } from '../helpers/helpers'
 import { HandContext } from '../Index'
 
 import BonusesInput from './inputs/BonusesInput'
@@ -22,6 +23,7 @@ export type AfterGameInitialValues = {
 
 const AfterGame = ({ setStep }: Props) => {
   const [hand] = useContext(HandContext)
+  const [players] = useContext(PlayersContext)
   const updateHand = useUpdateHand()
 
   const findBonus = (bonusName: string) => hand?.bonuses?.find(bonus => bonus.name === bonusName)
@@ -39,6 +41,13 @@ const AfterGame = ({ setStep }: Props) => {
         checked: hand?.bonuses?.some(bonus => bonus.name === 'poignee' && bonus.playerID) || false,
         playerID: findBonus('poignee')?.playerID || '',
       },
+
+      {
+        name: 'petitAuBout',
+        checked:
+          hand?.bonuses?.some(bonus => bonus.name === 'petitAuBout' && bonus.playerID) || false,
+        playerID: findBonus('petitAuBout')?.playerID || '',
+      },
       {
         name: 'chelem',
         checked: hand?.bonuses?.some(bonus => bonus.name === 'chelem' && bonus.playerID) || false,
@@ -46,19 +55,13 @@ const AfterGame = ({ setStep }: Props) => {
         done: findBonus('chelem')?.done || false,
         announced: findBonus('chelem')?.announced || false,
       },
-      {
-        name: 'petitAuBout',
-        checked:
-          hand?.bonuses?.some(bonus => bonus.name === 'petitAuBout' && bonus.playerID.length > 0) ||
-          false,
-        playerID: findBonus('petitAuBout')?.playerID || '',
-      },
     ],
   }
 
   const onSubmit = ({ taker, bonuses }: AfterGameInitialValues) => {
     const updatedHand = { ...hand, taker: { ...hand.taker, ...taker }, bonuses }
-    updateHand(updatedHand)
+    const score = calculateFinalScore(updatedHand, players)
+    updateHand({ ...updatedHand, score })
   }
 
   return (
