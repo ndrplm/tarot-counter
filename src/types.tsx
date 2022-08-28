@@ -15,12 +15,13 @@ export interface Hand {
   taker?: Taker
   defendeurs?: ID[]
   bonuses?: Bonus[]
+  score?: { taker: number; defendeurs: number }
 }
 
 export interface Taker {
   playerId?: string
   partnerId?: string
-  betName?: string
+  betName?: '' | 'petite' | 'garde' | 'gardeSans' | 'gardeContre'
   oudlersCount?: number
   pointsCount?: number
 }
