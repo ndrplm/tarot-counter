@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { HandsContext } from './Context'
+import { HandsContext } from '../../App'
 
 const Index = () => {
   const navigate = useNavigate()

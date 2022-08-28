@@ -1,5 +1,6 @@
 import { Form, Formik } from 'formik'
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { PlayersContext } from '../../../../App'
 import { Bonus, Taker } from '../../../../types'
 import { calculateFinalScore, useUpdateHand } from '../helpers/helpers'
@@ -25,6 +26,7 @@ const AfterGame = ({ setStep }: Props) => {
   const [hand] = useContext(HandContext)
   const [players] = useContext(PlayersContext)
   const updateHand = useUpdateHand()
+  const navigate = useNavigate()
 
   const findBonus = (bonusName: string) => hand?.bonuses?.find(bonus => bonus.name === bonusName)
 
@@ -62,6 +64,7 @@ const AfterGame = ({ setStep }: Props) => {
     const updatedHand = { ...hand, taker: { ...hand.taker, ...taker }, bonuses }
     const score = calculateFinalScore(updatedHand, players)
     updateHand({ ...updatedHand, score })
+    navigate(`/score?handId=${hand.id}`)
   }
 
   return (
